@@ -1,0 +1,307 @@
+{
+  "info": {
+    "name": "Smart Task Management API",
+    "description": "A RESTful API for managing tasks with intelligent suggestions",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string",
+      "description": "Base URL for the API"
+    }
+  ],
+  "item": [
+    {
+      "name": "API Root",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/",
+          "host": ["{{base_url}}"],
+          "path": [""]
+        },
+        "description": "Welcome message and API information"
+      },
+      "response": []
+    },
+    {
+      "name": "Tasks",
+      "item": [
+        {
+          "name": "Create Task",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Complete project documentation\",\n  \"description\": \"Write comprehensive documentation for the new API endpoints\",\n  \"due_date\": \"2025-06-01\",\n  \"status\": \"pending\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tasks/",
+              "host": ["{{base_url}}"],
+              "path": ["tasks", ""]
+            },
+            "description": "Create a new task with title, description, due date, and status"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Task - Minimal",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Project planning\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tasks/",
+              "host": ["{{base_url}}"],
+              "path": ["tasks", ""]
+            },
+            "description": "Create a task with only the required title field"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Tasks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tasks/",
+              "host": ["{{base_url}}"],
+              "path": ["tasks", ""]
+            },
+            "description": "Retrieve all tasks without any filters"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Tasks - Filter by Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tasks/?status=pending",
+              "host": ["{{base_url}}"],
+              "path": ["tasks", ""],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "pending",
+                  "description": "Filter by task status (pending, in_progress, completed)"
+                }
+              ]
+            },
+            "description": "Get tasks filtered by status"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Tasks - Filter by Date Range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tasks/?due_date_from=2025-05-25&due_date_to=2025-06-30",
+              "host": ["{{base_url}}"],
+              "path": ["tasks", ""],
+              "query": [
+                {
+                  "key": "due_date_from",
+                  "value": "2025-05-25",
+                  "description": "Filter tasks due from this date"
+                },
+                {
+                  "key": "due_date_to",
+                  "value": "2025-06-30",
+                  "description": "Filter tasks due until this date"
+                }
+              ]
+            },
+            "description": "Get tasks within a specific date range"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Tasks - Sorted by Due Date",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tasks/?sort_by=due_date&sort_order=asc",
+              "host": ["{{base_url}}"],
+              "path": ["tasks", ""],
+              "query": [
+                {
+                  "key": "sort_by",
+                  "value": "due_date",
+                  "description": "Sort by 'creation_date' or 'due_date'"
+                },
+                {
+                  "key": "sort_order",
+                  "value": "asc",
+                  "description": "Sort order: 'asc' or 'desc'"
+                }
+              ]
+            },
+            "description": "Get tasks sorted by due date in ascending order"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Task by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tasks/1",
+              "host": ["{{base_url}}"],
+              "path": ["tasks", "1"]
+            },
+            "description": "Get a specific task by its ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Task",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Complete project documentation - Updated\",\n  \"description\": \"Write comprehensive documentation for the new API endpoints with examples\",\n  \"status\": \"in_progress\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tasks/1",
+              "host": ["{{base_url}}"],
+              "path": ["tasks", "1"]
+            },
+            "description": "Update a specific task. Only provided fields will be updated."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Task Status Only",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"completed\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tasks/1",
+              "host": ["{{base_url}}"],
+              "path": ["tasks", "1"]
+            },
+            "description": "Update only the status of a task"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Task",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tasks/1",
+              "host": ["{{base_url}}"],
+              "path": ["tasks", "1"]
+            },
+            "description": "Delete a specific task by its ID"
+          },
+          "response": []
+        }
+      ],
+      "description": "CRUD operations for tasks"
+    },
+    {
+      "name": "Smart Features",
+      "item": [
+        {
+          "name": "Get Smart Task Suggestions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tasks/suggestions/smart",
+              "host": ["{{base_url}}"],
+              "path": ["tasks", "suggestions", "smart"]
+            },
+            "description": "Get smart task suggestions based on existing task patterns"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Task Statistics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tasks/statistics/overview",
+              "host": ["{{base_url}}"],
+              "path": ["tasks", "statistics", "overview"]
+            },
+            "description": "Get overview statistics of all tasks"
+          },
+          "response": []
+        }
+      ],
+      "description": "Smart features including suggestions and statistics"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Set common variables or perform setup tasks here",
+          "console.log('Making request to: ' + pm.request.url.toString());"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Common tests for all requests",
+          "pm.test('Response time is less than 2000ms', function () {",
+          "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+          "});",
+          "",
+          "pm.test('Response has correct content type', function () {",
+          "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+          "});"
+        ]
+      }
+    }
+  ]
+}
